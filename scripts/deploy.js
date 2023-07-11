@@ -32,7 +32,6 @@ async function main() {
   );
 
   await authorizeContract.waitForDeployment();
-
   console.log("AuthorizeContract deployed to:", authorizeContract.target);
 }
 

@@ -1,6 +1,5 @@
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
-const { BigNumber } = ethers;
 
 describe("AuthorizeContract", function () {
   let authorizeContract;

@@ -14,15 +14,32 @@ contract Suzuki is ERC721, ERC721URIStorage, ERC721Burnable, Ownable {
     uint256 private immutable _mintBlockNumber;
 
     mapping(address => bool) private _authorizedAddresses;
+    mapping(uint256 => bool) private _mintedTokens;
+    uint256[] private _availableTokens;
+
 
     constructor() ERC721("Suzuki", "SZK") {
         _mintBlockNumber = block.number;
     }
 
-    function safeMint(address to) public {
-        uint256 tokenId = _tokenIdCounter.current();
-        _tokenIdCounter.increment();
-        _safeMint(to, tokenId);
+    function safeMint(uint256 amount) external onlyOwner {
+        require(amount > 0, "Amount must be greater than zero");
+        require(_tokenIdCounter.current() + amount <= 100, "Exceeded maximum token supply");
+
+        for (uint256 i = 0; i < amount; i++) {
+            uint256 tokenId = _tokenIdCounter.current();
+            _tokenIdCounter.increment();
+            _mintedTokens[tokenId] = true;
+            _safeMint(msg.sender, tokenId);
+        }
+    }
+
+    function isTokenMinted(uint256 tokenId) public view returns (bool) {
+        return _mintedTokens[tokenId];
+    }
+
+    function getAvailableTokensForSale() external view returns (uint256[] memory) {
+        return _availableTokens;
     }
 
     function authorizeUser(address addressToBeAuthorized) public onlyOwner {

@@ -17,6 +17,7 @@
     "@openzeppelin/contracts": "^4.9.2",
     "chai": "^4.3.7",
     "ethers": "^6.6.2",
-    "mocha": "^10.2.0"
+    "mocha": "^10.2.0",
+    "solidity-coverage": "^0.8.4"
   }
 }
